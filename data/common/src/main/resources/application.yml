@@ -1,0 +1,10 @@
+# spring配置
+spring:
+  application:
+    name: cas
+  # 数据源配置
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.40:3306/dataintegration?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456

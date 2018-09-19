@@ -114,5 +114,5 @@ public class CollectionUtils {
 			else retString.append(list.get(i));
 		}
 		return retString.toString();
-	}	
+	}
 }

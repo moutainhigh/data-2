@@ -343,9 +343,9 @@ public class SQLUtils {
 		boolean isFirst = true;
 		for (String compare : compares) {
 			if (isFirst) {
-				sql2 += objField+compare+"'"+dateFormat.format(specDate)+"'";
+				sql2 += objField + compare + "'" + dateFormat.format(specDate)+"'";
 				isFirst = false;
-			} else sql2 += " OR "+objField+compare+"'"+dateFormat.format(specDate)+"'";
+			} else sql2 += " OR " + objField+compare + "'" + dateFormat.format(specDate) + "'";
 		}
 		sql2 += ")";
 		return sql2;

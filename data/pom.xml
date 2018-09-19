@@ -18,6 +18,7 @@
 		<module>pmodel</module>
 		<module>dao</module>
 		<module>cas</module>
+		<module>multi</module>
 		<module>zuul</module>
 		<module>eureka</module>
 	</modules>

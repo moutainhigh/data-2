@@ -26,7 +26,7 @@ public class Config {
 		// 载入外部配置文件
 		load();
 	}
-
+	// 
 	private void load() {
 		try {
 			properties = new Properties();
