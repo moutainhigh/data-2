@@ -11,6 +11,8 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
 
+import com.hourz.common.jdbc.JdbcUtils;
+
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +65,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
      */
     private void initslaveDataSources() {
         // 获取多数据源
-        String dsPrefixs = JdbcUtils.get;
+        String dsPrefixs = JdbcUtils.getInstance().query(null, null);
         for (String dsPrefix : dsPrefixs.split(",")) {
             // 多个数据源
             Map<String, Object> dsMap = new HashMap<>();

@@ -3,6 +3,7 @@ package com.hourz.common.sql;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -11,6 +12,16 @@ import java.util.regex.Pattern;
  * @since 2016-05-24
  */
 public class SQLUtils {
+	
+	
+	public static String crateSelectSql(String domainClassName, List<Map<Object, Object>> list) {
+		// 固定的SQL部分
+    	StringBuffer sql = new StringBuffer("SELECT dn FROM ");
+    	sql.append(domainClassName);
+    	sql.append(" dn");
+    	
+		return null;
+	}
 	
 	/**
 	 * <p>生成排序SQL</p>

@@ -21,6 +21,5 @@
 		<module>multi</module>
 		<module>zuul</module>
 		<module>eureka</module>
-		<module>leetcode</module>
 	</modules>
 </project>
