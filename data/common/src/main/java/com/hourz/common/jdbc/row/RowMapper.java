@@ -1,4 +1,4 @@
-package com.hourz.common.jdbc;
+package com.hourz.common.jdbc.row;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -11,10 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.Query;
-
 import com.hourz.common.config.Config;
-import com.hourz.common.props.PropsUtils;
 
 /**
  * <p>JDBC处理类</p>
@@ -25,11 +22,10 @@ public class JdbcUtils {
 	// 双重锁模式:是饱汉模式的优化,进行双重判断,当已经创建过实例对象后就无需加锁,提高效率.
 	private static JdbcUtils singleton;
 	/**
-	 * 无参构造器
+	 * <p>无参构造器</p>
 	 */
 	private JdbcUtils(){
 	}
-	
 	/**
 	 * <p>双重锁模式实现</p>
 	 * @return
@@ -114,6 +110,15 @@ public class JdbcUtils {
     	statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         resultList=listMapObject(resultSet);
+        close(resultSet, statement, conn);
+		return resultList;
+    }
+    
+    public static List<String> queryToDataSource(String sql, List<Object> params) throws SQLException {
+    	List<String> resultList = new ArrayList<>();
+    	statement = conn.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        resultList=null;
         close(resultSet, statement, conn);
 		return resultList;
     }
@@ -306,19 +311,5 @@ public class JdbcUtils {
 				System.out.println("键："+key+"；值："+map.get(key));
 			}
 		}
-	}
-    
-    /**
-	 * <p>TODO</p>
-	 */
-	private void createTab() {
-		StringBuffer createSql = new StringBuffer();
-		// mysql拼接创建表SQL
-		createSql.append(" create table " + "中国人" + " ( ");
-		createSql.append( "id_cpm_jh" +" int(11) NOT NULL AUTO_INCREMENT,");
-		createSql.append( " 人名 varchar(255) ,");
-		createSql.append( " 别名 varchar(100) ,");
-		createSql.append( " primary key (id_cpm_jh)");
-		createSql.append(") ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8");
 	}
 }

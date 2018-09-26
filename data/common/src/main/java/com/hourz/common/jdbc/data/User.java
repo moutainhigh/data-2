@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.hourz.common.jdbc;
+package com.hourz.common.jdbc.data;
 
 /**
  * <p>description</p>

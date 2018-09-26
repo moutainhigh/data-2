@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.hourz.common.jdbc;
+package com.hourz.common.jdbc.data;
 
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationHandler;
@@ -18,27 +15,30 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import com.hourz.common.jdbc.row.RowMapper;
+import com.hourz.common.jdbc.service.impl.JdbcServiceImpl;
+
 
 /**
  * <p>description</p>
  * @author hourz
  * @since 2018-09-21
  */
-public class JdbcOperationDataSource implements DataSource {
+public class JdbcDataSource implements DataSource {
 	
 	private int poolSize = 5;
 	 
 	private LinkedList<Connection> pool = new LinkedList<Connection>();
  
-	public JdbcOperationDataSource(String driver, String url, String name, String pwd) {
+	public JdbcDataSource(String driver, String url, String name, String pwd) {
 		this(driver, url, name, pwd, 5);
 	}
  
-	public JdbcOperationDataSource(String driver, String url) {
+	public JdbcDataSource(String driver, String url) {
 		this(driver, url, "", "", 5);
 	}
  
-	public JdbcOperationDataSource(String driver, String url, String name, String pwd, int poolSize) {
+	public JdbcDataSource(String driver, String url, String name, String pwd, int poolSize) {
 		try {
 			Class.forName(driver);
 			this.poolSize = poolSize;
@@ -152,11 +152,12 @@ public class JdbcOperationDataSource implements DataSource {
 	
 
 	public static void main(String[] args) throws SQLException {
-		JdbcOperationDataSource dataSource = new JdbcOperationDataSource("org.sqlite.JDBC", "jdbc:sqlite:/E:p1010.db");
-		JdbcOperationImpl jdbc = new JdbcOperationImpl(dataSource);
+		JdbcDataSource dataSource = new JdbcDataSource(
+				"com.mysql.jdbc.Driver", "jdbc:mysql://192.168.1.40:3306/cas", "root", "123456");
+		JdbcServiceImpl jdbc = new JdbcServiceImpl(dataSource);
+		@SuppressWarnings("unchecked")
 		List<User> list = (List<User>) jdbc.queryForBean("select * from t_user", new RowMapper<User>() {
 			User user = null;
- 
 			@Override
 			public User mapRow(ResultSet rs) throws SQLException {
 				user = new User();

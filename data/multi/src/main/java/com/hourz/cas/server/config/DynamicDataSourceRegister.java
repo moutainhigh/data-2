@@ -14,7 +14,10 @@ import org.springframework.core.type.AnnotationMetadata;
 import com.hourz.common.jdbc.JdbcUtils;
 
 import javax.sql.DataSource;
+
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,7 +45,12 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     @Override
     public void setEnvironment(Environment environment) {
         initDefaultDataSource(environment);
-        initslaveDataSources();
+        try {
+			initslaveDataSources();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -62,11 +70,12 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     /**
      * <p>TODO</p>
      * @param env
+     * @throws SQLException 
      */
-    private void initslaveDataSources() {
+    private void initslaveDataSources() throws SQLException {
         // 获取多数据源
-        String dsPrefixs = JdbcUtils.getInstance().query(null, null);
-        for (String dsPrefix : dsPrefixs.split(",")) {
+        List<String> dsPrefixs = JdbcUtils.getInstance().queryToDataSource(null, null);
+        for (String dsPrefix : dsPrefixs) {
             // 多个数据源
             Map<String, Object> dsMap = new HashMap<>();
             dsMap.put("driver", "");

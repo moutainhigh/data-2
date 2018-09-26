@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 8080
 spring:
   application:
     name: zuul
@@ -11,6 +11,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8092/eureka
+      defaultZone: http://localhost:8081/eureka
     healthcheck:
       enabled: true
