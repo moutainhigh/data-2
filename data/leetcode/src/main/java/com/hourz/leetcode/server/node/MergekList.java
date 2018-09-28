@@ -1,4 +1,4 @@
-package com.hourz.leetcode.server.array;
+package com.hourz.leetcode.server.node;
 
 import java.util.ArrayList;
 import java.util.Collections;
