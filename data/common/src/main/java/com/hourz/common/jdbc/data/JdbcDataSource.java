@@ -152,8 +152,13 @@ public class JdbcDataSource implements DataSource {
 	
 
 	public static void main(String[] args) throws SQLException {
-		JdbcDataSource dataSource = new JdbcDataSource(
-				"com.mysql.jdbc.Driver", "jdbc:mysql://192.168.1.40:3306/cas", "root", "123456");
+		// mysql
+		JdbcDataSource dataSource = new JdbcDataSource("com.mysql.jdbc.Driver", "jdbc:mysql://192.168.1.40:3306/cas", "root", "123456");
+		// oracle
+		JdbcDataSource dataSource1 = new JdbcDataSource("oracle.jdbc.OracleDriver", "jdbc:mysql://192.168.1.128:1521/DATAINTEGRATION", "root", "htgd123456");
+		// kingbase
+		JdbcDataSource dataSource2 = new JdbcDataSource("com.kingbase.Driver", "jdbc:kingbase://192.168.1.128:54321/DATAINTEGRATION", "DEV", "123456");
+					
 		JdbcServiceImpl jdbc = new JdbcServiceImpl(dataSource);
 		@SuppressWarnings("unchecked")
 		List<User> list = (List<User>) jdbc.queryForBean("select * from t_user", new RowMapper<User>() {

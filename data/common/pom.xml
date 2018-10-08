@@ -36,5 +36,17 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+		<!-- kingbase driver depend -->
+		<dependency>
+			<groupId>com.kingbase</groupId>
+			<artifactId>kingbasejdbc4</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- oracle 11 driver depend -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3</version>
+		</dependency>
     </dependencies>
 </project>
