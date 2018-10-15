@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="data/cas/src/main/java"/>
+	<classpathentry kind="src" path="data/cas/src/test/java"/>
+	<classpathentry kind="src" path="data/common/src/main/java"/>
+	<classpathentry kind="src" path="data/dao/src/main/java"/>
+	<classpathentry kind="src" path="data/eureka/src/main/java"/>
+	<classpathentry kind="src" path="data/leetcode/src/main/java"/>
+	<classpathentry kind="src" path="data/leetcode/src/test/java"/>
+	<classpathentry kind="src" path="data/multi/src/main/java"/>
+	<classpathentry kind="src" path="data/multi/src/test/java"/>
+	<classpathentry kind="src" path="data/pmodel/src/main/java"/>
+	<classpathentry kind="src" path="data/pojo/src/main/java"/>
+	<classpathentry kind="src" path="data/tmodel/src/main/java"/>
+	<classpathentry kind="src" path="data/zuul/src/main/java"/>
+	<classpathentry kind="src" path="data/zuul/src/test/java"/>
+	<classpathentry kind="lib" path="data/common/target/common-1.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="data/dao/target/dao-1.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="data/pmodel/target/pmodel-1.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="data/pojo/target/pojo-1.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="data/tmodel/target/tmodel-1.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="data/cas/target/classes"/>
+</classpath>

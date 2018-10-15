@@ -1,6 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!-- service group name -->
+    <artifactId>dao</artifactId>
     
     <!-- spring boot parent  -->
 	<parent>
@@ -9,22 +11,6 @@
         <version>1.0.1-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-    
-    <!-- service group name -->
-    <artifactId>dao</artifactId>
-    
-    <!-- spring boot management depend on -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.0.1.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <!-- encoding and java version -->
     <properties>
@@ -38,13 +24,11 @@
         <dependency>
             <groupId>com.hourz</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <!-- pojo depent -->
         <dependency>
             <groupId>com.hourz</groupId>
             <artifactId>pojo</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <!-- tmodel depent -->
 		<dependency>
@@ -79,6 +63,5 @@
     </dependencies>
     <!-- depend end -->
     <build>
-    
     </build>
 </project>

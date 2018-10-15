@@ -50,7 +50,7 @@ Configuration:
         - ref: ROLLING_FILE
     # 为com.casic27.server包配置特殊的Log级别，方便调试
     Logger: 
-      - name: com.hourz
+      - name: com.hourz.cas
         additivity: false
         level: ${sys:log.level.xjj}
         AppenderRef:

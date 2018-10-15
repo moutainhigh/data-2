@@ -5,11 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @MapperScan("com.hourz.dao")
-@EnableEurekaClient
+//@EnableEurekaClient
 public class Application {
 	private static final Logger logger = LogManager.getLogger(Application.class);
 	
