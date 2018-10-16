@@ -19,89 +19,83 @@
 	</properties>
 	
 	<dependencies>
-		<!-- common depent -->
-        <dependency>
-            <groupId>com.hourz</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-        <!-- pojo depent -->
-        <dependency>
-            <groupId>com.hourz</groupId>
-            <artifactId>pojo</artifactId>
-        </dependency>
-        <!-- dao depent -->
-        <dependency>
-            <groupId>com.hourz</groupId>
-            <artifactId>dao</artifactId>
-        </dependency>
+
+		<dependency>
+		    <groupId>com.hourz</groupId>
+		    <artifactId>pojo</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.hourz</groupId>
+		    <artifactId>dao</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.hourz</groupId>
+		    <artifactId>common</artifactId>
+		</dependency>
         <!--spring boot start depend -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+		  	<groupId>org.springframework.boot</groupId>
+		  	<artifactId>spring-boot-starter</artifactId>
+		  	<!-- remove spring boot logging of Logback -->
+		  	<exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+	    	</exclusions>
 		</dependency>
+		<!-- spring boot log4j2 depend -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<!-- log4j2 style jackson databind depend -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>  
+			<artifactId>jackson-databind</artifactId>  
+		</dependency>
+		<!-- log4j2 style jackson dataformat yaml depend -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>  
+			<artifactId>jackson-dataformat-yaml</artifactId>  
+		</dependency>
+	    <!--spring boot starter test depend -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-test</artifactId>
+	    </dependency>
+	    <!--spring boot starter web depend -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	    </dependency>
+		<!-- spring cloud eureka client depend -->
+		<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>2.0.1.RELEASE</version>
+        </dependency>
 		<!-- spring cloud security depend -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!--spring boot web depend -->
+		<!-- spring boot mybatis depend -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!-- spring boot test depend -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- spring cloud mybatis depend -->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-		<!-- mysql driver depend -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <!-- mysql depend -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- kaptcha depend -->
+        <dependency>
+        	<groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
 	</dependencies>
-	<repositories>
-        <repository>
-            <id>in-project</id>
-            <name>In Project Repo</name>
-            <url>file://${project.basedir}/lib</url>
-        </repository>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>public</id>
-            <name>Public Repositories</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>Public Repositories</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-    
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version><!--$NO-MVN-MAN-VER$-->
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

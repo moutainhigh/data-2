@@ -3,7 +3,6 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- service group name -->
     <artifactId>dao</artifactId>
-    
     <!-- spring boot parent  -->
 	<parent>
         <artifactId>parent</artifactId>
@@ -11,13 +10,12 @@
         <version>1.0.1-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
-
     <!-- encoding and java version -->
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
     <!-- depend start -->
     <dependencies>
     	<!-- common depent -->
@@ -52,7 +50,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>1.5.10.RELEASE</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
         <!-- pagerhelper google depend -->
 		<dependency>
@@ -61,7 +58,4 @@
 			<version>5.1.4</version>
 		</dependency>
     </dependencies>
-    <!-- depend end -->
-    <build>
-    </build>
 </project>

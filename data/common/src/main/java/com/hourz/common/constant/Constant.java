@@ -29,5 +29,7 @@ public class Constant {
 	public static final String Res_Code_Login_Success = "login_success";
 	// 登录失败
 	public static final String Res_Code_Login_Fail = "login_fail";
+	// 验证码SESSIONKEY
+	public static final String KAPTCHA_SESSION_KEY = "";
 	
 }

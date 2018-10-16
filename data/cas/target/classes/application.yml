@@ -1,7 +1,7 @@
 #  服务配置
 server:
   # 端口号
-  port: 8098
+  port: 8082
   # 服务环境
   servlet:
     context-path: /v0.1
@@ -34,6 +34,4 @@ pagehelper:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8092/eureka
-    healthcheck:
-      enabled: true
+      defaultZone: http://localhost:8081/eureka

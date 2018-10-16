@@ -21,29 +21,36 @@
 	<dependencies>
 		<!--spring boot start depend -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<version>2.0.1.RELEASE</version><!--$NO-MVN-MAN-VER$ -->
-			<!-- remove spring boot logging -->
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
+		  	<groupId>org.springframework.boot</groupId>
+		  	<artifactId>spring-boot-starter</artifactId>
+		  	<!-- remove spring boot logging of Logback -->
+		  	<exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+	    	</exclusions>
 		</dependency>
 		<!-- spring boot log4j2 depend -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-			<version>2.0.1.RELEASE</version><!--$NO-MVN-MAN-VER$ -->
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
-		<!-- spring boot test depend -->
+		<!-- log4j2 style jackson databind depend -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<version>2.0.1.RELEASE</version><!--$NO-MVN-MAN-VER$ -->
+		    <groupId>com.fasterxml.jackson.core</groupId>  
+			<artifactId>jackson-databind</artifactId>  
 		</dependency>
+		<!-- log4j2 style jackson dataformat yaml depend -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>  
+			<artifactId>jackson-dataformat-yaml</artifactId>  
+		</dependency>
+	    <!--spring boot starter test depend -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-test</artifactId>
+	    </dependency>
 		<!-- spring cloud eureka client depend -->
 		<dependency>
             <groupId>org.springframework.cloud</groupId>

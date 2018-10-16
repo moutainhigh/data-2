@@ -2,9 +2,6 @@ package com.hourz.common.config;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * <p>配置信息</p>
  * <p>这个类会读取类路径下得config.properties文件，
@@ -13,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
  * @since 2016-05-24
  */
 public class Config {
-	protected final static Log logger = LogFactory.getLog(Config.class);
 
 	// 同步对象
 	private static Object synObj = new Object();
@@ -32,7 +28,7 @@ public class Config {
 			properties = new Properties();
 			properties.load(Config.class.getClassLoader().getResourceAsStream("config.properties"));
 		} catch (Exception ex) {
-			logger.error("载入配置文件 'config.properties' 失败!", ex);
+			ex.printStackTrace();
 		}
 	}
 
