@@ -1,0 +1,37 @@
+#  服务配置
+server:
+  # 端口号
+  port: 8082
+  # 服务环境
+  servlet:
+    context-path: /v0.1
+
+# spring配置
+spring:
+  application:
+    name: datamap
+  # 数据源配置
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.40:3306/dataintegration?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+
+# mybatis配置
+mybatis:
+  # 基础配置
+  configuration:
+    # 下划线转化驼峰
+    map-underscore-to-camel-case: true
+
+# 分页插件
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  page-size-zero: true
+  params: count=countSql
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka

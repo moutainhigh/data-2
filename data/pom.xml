@@ -22,5 +22,6 @@
 		<module>multi</module>
 		<module>zuul</module>
 		<module>eureka</module>
+		<module>datamap</module>
 	</modules>
 </project>

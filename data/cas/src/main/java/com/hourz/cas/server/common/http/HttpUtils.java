@@ -1,4 +1,4 @@
-package com.hourz.cas.server.common.captcha;
+package com.hourz.cas.server.common.http;
 
 public class HttpUtils {
 

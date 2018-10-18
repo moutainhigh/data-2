@@ -1,5 +1,9 @@
 package com.hourz.common.jdbc.service.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +26,6 @@ import com.hourz.common.jdbc.service.JdbcService;
  * @since 2018-09-21
  */
 public class JdbcServiceImpl implements JdbcService {
-
 	// 自动提交是否
 	private static final boolean AUTO_COMMIT = true;
 	// 设置
@@ -50,9 +53,6 @@ public class JdbcServiceImpl implements JdbcService {
 		}
 		return null;
 	}
-	
-	
-	
 	// 执行SQL(有条件)-(增加|修改|删除)
 	@Override
 	public int execute(String sql, Object[] params) throws SQLException {
@@ -192,7 +192,18 @@ public class JdbcServiceImpl implements JdbcService {
 			int columnCount = rsd.getColumnCount();
 			while (rs.next()) {
 				map = new HashMap<String, Object>(columnCount);
-				for (int i = 1; i < columnCount; i++) {
+				for (int i = 1; i <= columnCount; i++) {
+					if(rsd.getColumnTypeName(i).toLowerCase().contains("blob")) {
+						String result = queryBlob(rs,i).toString();
+						System.out.println(result);
+		                map.put(rsd.getColumnName(i), result);
+					} else if(rsd.getColumnTypeName(i).toLowerCase().contains("clob")) {
+						String result = queryBlob(rs,i).toString();
+		                map.put(rsd.getColumnName(i), result);
+					}
+					if(rs.getObject(i) == null) {
+						
+					}
 					map.put(rsd.getColumnName(i), rs.getObject(i));
 				}
 				list.add(map);
@@ -207,6 +218,19 @@ public class JdbcServiceImpl implements JdbcService {
 		}
 		return null;
 	}
+	// 二进制读取问String
+	public StringBuffer queryBlob(ResultSet rs,int i) throws SQLException, IOException {
+		StringBuffer strBuffer = new StringBuffer();
+		Blob b = rs.getBlob(i);
+		InputStream in=b.getBinaryStream();
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        byte[] data = new byte[4096];
+        int count = -1;
+        while((count = in.read(data,0,4096)) != -1) outStream.write(data, 0, count);
+        strBuffer.append(new String(outStream.toByteArray(), "utf-8"));
+		return strBuffer;
+	}
+	
 	// 查询列表-无条件
 	@Override
 	public List<Map<String, Object>> queryForMap(String sql) throws SQLException {

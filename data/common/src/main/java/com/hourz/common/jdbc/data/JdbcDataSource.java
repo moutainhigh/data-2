@@ -6,16 +6,15 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import com.hourz.common.jdbc.row.RowMapper;
 import com.hourz.common.jdbc.service.impl.JdbcServiceImpl;
 
 
@@ -45,7 +44,6 @@ public class JdbcDataSource implements DataSource {
 			if (poolSize <= 0) {
 				throw new RuntimeException("初始化池大小失败: " + poolSize);
 			}
- 
 			for (int i = 0; i < poolSize; i++) {
 				Connection con = DriverManager.getConnection(url, name, pwd);
 				con = ConnectionProxy.getProxy(con, pool);// 获取被代理的对象
@@ -120,7 +118,12 @@ public class JdbcDataSource implements DataSource {
 			this.obj = obj;
 			this.pool = pool;
 		}
- 
+		/**
+		 * 
+		 * @param o
+		 * @param pool
+		 * @return
+		 */
 		public static Connection getProxy(Object o, LinkedList<Connection> pool) {
 			Object proxed = Proxy.newProxyInstance(o.getClass().getClassLoader(), new Class[] { Connection.class },
 					new ConnectionProxy(o, pool));
@@ -155,25 +158,16 @@ public class JdbcDataSource implements DataSource {
 		// mysql
 		JdbcDataSource dataSource = new JdbcDataSource("com.mysql.jdbc.Driver", "jdbc:mysql://192.168.1.40:3306/cas", "root", "123456");
 		// oracle
-		JdbcDataSource dataSource1 = new JdbcDataSource("oracle.jdbc.OracleDriver", "jdbc:mysql://192.168.1.128:1521/DATAINTEGRATION", "root", "htgd123456");
+		JdbcDataSource dataSource1 = new JdbcDataSource("oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@//192.168.1.145:1521/irisdb", "STU", "STU");
 		// kingbase
 		JdbcDataSource dataSource2 = new JdbcDataSource("com.kingbase.Driver", "jdbc:kingbase://192.168.1.128:54321/DATAINTEGRATION", "DEV", "123456");
 					
 		JdbcServiceImpl jdbc = new JdbcServiceImpl(dataSource);
-		@SuppressWarnings("unchecked")
-		List<User> list = (List<User>) jdbc.queryForBean("select * from t_user", new RowMapper<User>() {
-			User user = null;
-			@Override
-			public User mapRow(ResultSet rs) throws SQLException {
-				user = new User();
-				user.setId(rs.getInt("id"));
-				user.setUsername(rs.getString("username"));
-				return user;
+		List<Map<String, Object>> listMap = jdbc.queryForMap("select * from s1_test");
+		for (int i = 0; i < listMap.size(); i++) {
+			for(String key: listMap.get(i).keySet()) {
+				System.out.println(i + key + "---" + listMap.get(i).get(key));
 			}
-		});
-		for (User user : list) {
-			System.out.println(user.getId() + "---" + user.getUsername());
 		}
-
 	}
 }

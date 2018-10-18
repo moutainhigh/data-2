@@ -25,6 +25,7 @@ public class JdbcUtils {
 	 * <p>无参构造器</p>
 	 */
 	private JdbcUtils(){
+		
 	}
 	/**
 	 * <p>双重锁模式实现</p>
@@ -41,28 +42,45 @@ public class JdbcUtils {
 		return singleton;
 	}
 	// 用户名
-	private static String user = null;
+	public static String user = null;
 	// 密码
-    private static String password = null;
+	public static String password = null;
     // 驱动
-    private static String driver = null;
+	public static String driver = null;
     // URL：包含前缀、IP地址、端口号、数据库名
-    private static String url = null;
+	public static String url = null;
     // 连接对象
-    private static Connection conn = null;
-    private static PreparedStatement statement;
+    private Connection conn = null;
+    private PreparedStatement statement;
 	// 读取配置文件且加载数据库驱动
-    static{
+    static {
+        // 读取配置文件
+        driver = Config.getInstance().getProperty("datasource.driverClassName");
+        url = Config.getInstance().getProperty("datasource.url");
+        user = Config.getInstance().getProperty("datasource.username");
+        password = Config.getInstance().getProperty("datasource.password");
+        // 加载驱动
+    	try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    // 建立数据库的连接
+    public Connection setConn(String newUrl, String newDriver, String newUser,String newPassword){
         try {
-            // 读取配置文件
-            driver = Config.getInstance().getProperty("datasource.driverClassName");
-            url = Config.getInstance().getProperty("datasource.url");
-            user = Config.getInstance().getProperty("datasource.username");
-            password = Config.getInstance().getProperty("datasource.password");
-            // 加载驱动
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
+        	try {
+    			Class.forName(newDriver);
+    		} catch (ClassNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            return DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
     
@@ -81,7 +99,7 @@ public class JdbcUtils {
      * @return 结果集封装JSON
      * @throws SQLException 
      */
-    public static List<Map<String, Object>> listMapObject(ResultSet resultSet) throws SQLException{
+    public List<Map<String, Object>> listMapObject(ResultSet resultSet) throws SQLException{
     	ResultSetMetaData setMetaData = resultSet.getMetaData();
 		List<Map<String, Object>> resultList = new ArrayList<>();
 		while (resultSet.next()) {
@@ -105,7 +123,7 @@ public class JdbcUtils {
      * @return
      * @throws SQLException
      */
-    public static List<Map<String,Object>> query(String sql, List<Object> params) throws SQLException {
+    public List<Map<String,Object>> query(String sql, List<Object> params) throws SQLException {
     	List<Map<String, Object>> resultList = new ArrayList<>();
     	statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
@@ -114,7 +132,7 @@ public class JdbcUtils {
 		return resultList;
     }
     
-    public static List<String> queryToDataSource(String sql, List<Object> params) throws SQLException {
+    public List<String> queryToDataSource(String sql, List<Object> params) throws SQLException {
     	List<String> resultList = new ArrayList<>();
     	statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
@@ -276,7 +294,7 @@ public class JdbcUtils {
      * @param pst 声明
      * @param conn 连接
      */
-    public static void close(ResultSet resultSet, PreparedStatement preparedStatement, Connection conn){
+    public void close(ResultSet resultSet, PreparedStatement preparedStatement, Connection conn){
         if(resultSet != null){
             try {
             	resultSet.close();
@@ -303,10 +321,27 @@ public class JdbcUtils {
         }
     }
     
-    public static void main(String[] args) throws SQLException {
-		String sql ="SELECT * FROM t_stu";
-		List<Map<String, Object>> resultList = query(sql,null);
-		for(Map<String, Object> map:resultList) {
+    
+    
+    public PreparedStatement getStatement() {
+		return statement;
+	}
+	public void setStatement(PreparedStatement statement) {
+		this.statement = statement;
+	}
+
+	
+	public static void main(String[] args) throws SQLException {
+    	//JdbcUtils jdbc = new JdbcUtils();
+    	String newUrl = "jdbc:mysql://localhost:3306/cas";
+    	String newDriver = "com.mysql.jdbc.Driver";
+    	String newUser = "root";
+    	String newPassword = "123456";
+    	JdbcUtils.getInstance().setConn(newUrl, newDriver, newUser, newPassword);
+    	
+		String sql ="SELECT * FROM rwgl_cjxx";
+		List<Map<String, Object>> resultList = JdbcUtils.getInstance().query(sql,null);
+		for(Map<String, Object> map : resultList) {
 			for(String key:map.keySet()) {
 				System.out.println("键："+key+"；值："+map.get(key));
 			}
