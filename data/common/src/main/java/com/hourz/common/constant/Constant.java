@@ -22,7 +22,7 @@ public class Constant {
 	// 保存登录信息的天数
 	public static final String Config_Remember_Me_Valid_Days =  "remember_me_valid_days";
 	// 验证码错误
-	public static final String Res_Code_Captcha_Error = "captcha_error ";
+	public static final String Res_Code_Captcha_Error = "captcha_error";
 	// 密码错误
 	public static final String Res_Code_Password_Error = "password_error";
 	// 登录成功
@@ -31,5 +31,9 @@ public class Constant {
 	public static final String Res_Code_Login_Fail = "login_fail";
 	// 验证码SESSIONKEY
 	public static final String KAPTCHA_SESSION_KEY = "";
+	// 系统异常
+	public static final String SYSTEM_ERROR = "system_error";
+	// 运行时异常
+	public static final String RUNTIME_EXCEPTION  = "runtime_exception";
 	
 }

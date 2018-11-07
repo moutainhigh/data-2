@@ -1,8 +1,7 @@
 package com.hourz.common.jdbc.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +18,7 @@ import javax.sql.DataSource;
 
 import com.hourz.common.jdbc.row.RowMapper;
 import com.hourz.common.jdbc.service.JdbcService;
+import com.hourz.common.stream.StreamUtils;
 
 /**
  * <p>Jdbc接口实现</p>
@@ -173,7 +173,7 @@ public class JdbcServiceImpl implements JdbcService {
 	}
 	// 查询列表-有条件
 	@Override
-	public List<Map<String, Object>> queryForMap(String sql, Object[] params) throws SQLException {
+	public List<Map<String, String>> queryForMap(String sql, Object[] params) throws SQLException {
 		// 设置自动提交
 		Connection conn = getConnection();
 		// 创建声明
@@ -185,26 +185,24 @@ public class JdbcServiceImpl implements JdbcService {
 			stmt = createPreparedStatement(conn, sql, params);
 			// 执行结果
 			rs = createResultSet(stmt);
-			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-			Map<String, Object> map = null;
+			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+			Map<String, String> map = null;
 			ResultSetMetaData rsd = rs.getMetaData();
 			// 获取查询总数
 			int columnCount = rsd.getColumnCount();
 			while (rs.next()) {
-				map = new HashMap<String, Object>(columnCount);
+				map = new HashMap<String, String>(columnCount);
 				for (int i = 1; i <= columnCount; i++) {
-					if(rsd.getColumnTypeName(i).toLowerCase().contains("blob")) {
-						String result = queryBlob(rs,i).toString();
-						System.out.println(result);
-		                map.put(rsd.getColumnName(i), result);
-					} else if(rsd.getColumnTypeName(i).toLowerCase().contains("clob")) {
-						String result = queryBlob(rs,i).toString();
-		                map.put(rsd.getColumnName(i), result);
+					if(rs.getObject(i) != null) {
+						if(rsd.getColumnTypeName(i).toLowerCase().contains("blob")) {
+							Blob b = rs.getBlob(i);
+							InputStream in = b.getBinaryStream();
+							//InputStream in = rs.getBinaryStream(i);
+							map.put(rsd.getColumnName(i), StreamUtils.getInstance().InputStreamTOString(in));
+						} else {
+							map.put(rsd.getColumnName(i), new String(rs.getString(i).getBytes(), "UTF-8"));
+						}
 					}
-					if(rs.getObject(i) == null) {
-						
-					}
-					map.put(rsd.getColumnName(i), rs.getObject(i));
 				}
 				list.add(map);
 			}
@@ -218,22 +216,10 @@ public class JdbcServiceImpl implements JdbcService {
 		}
 		return null;
 	}
-	// 二进制读取问String
-	public StringBuffer queryBlob(ResultSet rs,int i) throws SQLException, IOException {
-		StringBuffer strBuffer = new StringBuffer();
-		Blob b = rs.getBlob(i);
-		InputStream in=b.getBinaryStream();
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        byte[] data = new byte[4096];
-        int count = -1;
-        while((count = in.read(data,0,4096)) != -1) outStream.write(data, 0, count);
-        strBuffer.append(new String(outStream.toByteArray(), "utf-8"));
-		return strBuffer;
-	}
 	
 	// 查询列表-无条件
 	@Override
-	public List<Map<String, Object>> queryForMap(String sql) throws SQLException {
+	public List<Map<String, String>> queryForMap(String sql) throws SQLException {
 		return queryForMap(sql, new Object[] {});
 	}
 	// 有条件-批量执行

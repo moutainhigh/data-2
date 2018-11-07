@@ -96,7 +96,7 @@ public interface JdbcService {
 	 * @return List<Map<String, Object>>数据集合
 	 * @throws SQLException
 	 */
-	public abstract List<Map<String, Object>> queryForMap(String sql, Object[] params) throws SQLException;
+	public abstract List<Map<String, String>> queryForMap(String sql, Object[] params) throws SQLException;
  
 	/**
 	 * <p>select功能</p>
@@ -105,7 +105,7 @@ public interface JdbcService {
 	 * @return List<Map<String, Object>>数据集合
 	 * @throws SQLException
 	 */
-	public abstract List<Map<String, Object>> queryForMap(String sql) throws SQLException;
+	public abstract List<Map<String, String>> queryForMap(String sql) throws SQLException;
  
 	/**
 	 * <p>select功能</p>

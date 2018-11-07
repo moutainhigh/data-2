@@ -6,10 +6,14 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Import;
+
+import com.hourz.cas.server.config.DynamicDataSource;
 
 @SpringBootApplication
 @MapperScan("com.hourz.dao")
 @EnableEurekaClient
+@Import(DynamicDataSource.class)
 public class Application {
 	private static final Logger logger = LogManager.getLogger(Application.class);
 	

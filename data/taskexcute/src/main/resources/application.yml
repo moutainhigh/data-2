@@ -1,0 +1,52 @@
+# 服务设置  
+server: 
+  port: 8094
+  #address: 0.0.0.0 
+  tomcat.max-threads: 0 
+  tomcat.uri-encoding: UTF-8 
+  connection-timeout: 3000 
+  
+# Spring设置
+spring:
+  # HTTP请求编码
+  http: 
+    encoding.charset: UTF-8 
+    encoding.force: true
+
+  # 数据源配置
+  datasource: 
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dataintegration?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: dev
+    password: 123456
+    
+  # 设置消息队列名称
+  application:
+    name: mq
+  # 设置消息队列信息
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 123456
+  
+  # 设置日志服务
+#  data: 
+#    elasticsearch:
+#      cluster-nodes: 192.168.1.218:9300
+#      cluster-name: "docker-cluster"
+#      repositories:
+#        enabled: true
+      
+# 配置分页插件
+pagehelper:
+    helperDialect: oracle
+    reasonable: true 
+    supportMethodsArguments: true 
+    params: count=countSql 
+    pageSizeZero: true
+    
+# 配置默认映射mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

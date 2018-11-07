@@ -161,11 +161,17 @@ public class JdbcDataSource implements DataSource {
 		JdbcDataSource dataSource1 = new JdbcDataSource("oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@//192.168.1.145:1521/irisdb", "STU", "STU");
 		// kingbase
 		JdbcDataSource dataSource2 = new JdbcDataSource("com.kingbase.Driver", "jdbc:kingbase://192.168.1.128:54321/DATAINTEGRATION", "DEV", "123456");
-					
-		JdbcServiceImpl jdbc = new JdbcServiceImpl(dataSource);
-		List<Map<String, Object>> listMap = jdbc.queryForMap("select * from s1_test");
+		JdbcDataSource dataSource4 = new JdbcDataSource("oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@//192.168.1.39:1521/ORCL", "cas", "cas");
+		Byte[] a;
+		Byte[] b;
+		
+		JdbcServiceImpl jdbc = new JdbcServiceImpl(dataSource2);
+		/*String sql = "insert into s1_test values('1','2','3','4','5','6')";
+		jdbc.execute(sql);*/
+		List<Map<String, String>> listMap = jdbc.queryForMap("SELECT * from S1_TEST");
 		for (int i = 0; i < listMap.size(); i++) {
 			for(String key: listMap.get(i).keySet()) {
+				
 				System.out.println(i + key + "---" + listMap.get(i).get(key));
 			}
 		}

@@ -11,6 +11,6 @@ import com.hourz.pojo.User;
  */
 public interface UserService {
 
-	PageInfo<User> list(int pagesize, int pageNum, Map<String, Object> item) throws Exception;
+	PageInfo<User> list(int pagesize, int pageNum, Map<String, Object> item);
 
 }

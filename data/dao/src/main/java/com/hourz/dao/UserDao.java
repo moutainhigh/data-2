@@ -13,14 +13,14 @@ import com.hourz.pojo.User;
 public interface UserDao {
 
 	@SelectProvider(method = "list", type = UserProvider.class)
-	PageInfo<User> list(Map<String, Object> item) throws Exception;
+	PageInfo<User> list(Map<String, Object> item);
 	
 	@SelectProvider(method = "save", type = UserProvider.class)
-	Long save(User user) throws Exception;
+	Long save(User user);
 	
 	@SelectProvider(method = "update", type = UserProvider.class)
-	Long update(User user) throws Exception;
+	Long update(User user);
 	
 	@SelectProvider(method = "remove", type = UserProvider.class)
-	Long remove(String ids) throws Exception;
+	Long remove(String ids);
 }

@@ -1,37 +1,50 @@
-#  服务配置
 server:
-  # 端口号
-  port: 8082
-  # 服务环境
+  port: 8097
   servlet:
     context-path: /v0.1
-
-# spring配置
 spring:
   application:
     name: datamap
-  # 数据源配置
+  # HTTP请求编码
+  http: 
+    encoding.charset: UTF-8 
+    encoding.force: true
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.40:3306/dataintegration?useUnicode=true&characterEncoding=utf8
-    username: root
+    name: db
+    url: jdbc:kingbase://192.168.1.128:54321/DATAINTEGRATION
+    username: DEV
     password: 123456
-
-# mybatis配置
-mybatis:
-  # 基础配置
-  configuration:
-    # 下划线转化驼峰
-    map-underscore-to-camel-case: true
-
-# 分页插件
+    driver-class-name: com.kingbase.Driver
+#    url: jdbc:mysql://192.168.1.128:3306/dataintegration?useUnicode=true&characterEncoding=utf-8&useSSL=false
+#    username: root
+#    password: htgd123456
+#    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
 pagehelper:
+  helperDialect: mysql
   reasonable: true
-  support-methods-arguments: true
-  page-size-zero: true
+  supportMethodsArguments: true
   params: count=countSql
-  
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8081/eureka
+      defaultZone: http://192.168.1.128:8092/eureka
+    healthcheck:
+      enabled: true
+  instance:
+#      prefer-ip-address: true #  以IP地址注册到服务中心
+    hostname: 192.168.1.40
+    instance-id: 192.168.1.40:${server.port}

@@ -25,11 +25,24 @@ public class CResult<T> {
 		super();
 	}
 	
+	/**
+	 * 
+	 * @param success
+	 */
 	public CResult(boolean success) {
 		super();
 		this.success = success;
 	}
 	
+	/**
+	 * 连接成功
+	 * @param success
+	 * @param code
+	 * @param result_obj
+	 * @param result_list
+	 * @param result_total
+	 * @param message
+	 */
 	public CResult(boolean success, String code, T result_obj, List<T> result_list, Long result_total, String message) {
 		super();
 		this.success = success;
@@ -37,6 +50,13 @@ public class CResult<T> {
 		this.result_obj = result_obj;
 		this.result_list = result_list;
 		this.result_total = result_total;
+		this.message = message;
+	}
+	
+	public CResult(boolean success, String code, String message) {
+		super();
+		this.success = success;
+		this.code = code;
 		this.message = message;
 	}
 

@@ -247,4 +247,9 @@ public class DateUtils {
     	setCalendarTopestOfTime(cal);
     	return cal.getTime();
 	}	
+
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(DateUtils.dateObjToDateStr(date, "yyyyMMddHHmmssSSS"));
+	}
 }

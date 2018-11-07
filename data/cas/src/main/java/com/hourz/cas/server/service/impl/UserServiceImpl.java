@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	UserDao userDao;
 	
 	@Override
-	public PageInfo<User> list(int pagesize, int pageNum, Map<String, Object> item) throws Exception {
+	public PageInfo<User> list(int pagesize, int pageNum, Map<String, Object> item) {
 		PageHelper.startPage(pageNum, pagesize);
 		PageInfo<User> page = userDao.list(item);
 		return page;

@@ -19,8 +19,7 @@ public class SQLUtils {
     	StringBuffer sql = new StringBuffer("SELECT dn FROM ");
     	sql.append(domainClassName);
     	sql.append(" dn");
-    	
-		return null;
+		return sql.toString();
 	}
 	
 	/**

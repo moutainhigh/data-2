@@ -117,4 +117,14 @@ public class PatternUtils {
 		return P_LAN_IP.matcher(address).matches();
 	}
 
+	public static void main(String[] args) {
+		String msg="cpm12_s1_test_ss";
+		/*System.out.println(msg.indexOf("_"));
+		System.out.println(msg.substring(msg.indexOf("_")+1, msg.length()));*/
+		Pattern p = Pattern.compile("(\\S*(_)\\S*)");
+		Matcher m = p.matcher(msg);
+		if(m.matches())
+		   System.out.println(m.group());
+	
+	}
 }

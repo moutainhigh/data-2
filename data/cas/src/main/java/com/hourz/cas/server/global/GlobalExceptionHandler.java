@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.net.BindException;
 import java.sql.SQLException;
 
-import org.springframework.http.ResponseEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hourz.common.constant.Constant;
+import com.hourz.common.json.CResult;
 
 /**
  * <p>整体异常处理</p>
@@ -16,16 +20,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 public class GlobalExceptionHandler  {
 
+	private static final Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
+	
 	/**
-	 * <p>普通异常</p>
+	 * <p>系统异常</p>
 	 * @param e
 	 * @return
 	 */
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
-	public ResponseEntity exceptionHandle(Exception e){ 
-		// TODO处理方法参数的异常类型
-		return null;
+	public CResult<Exception> exceptionHandle(Exception e){
+		logger.error("系统异常{" + e.getMessage() + "}");
+		return new CResult<Exception>(false, "500", Constant.SYSTEM_ERROR);
 	}
 	
 	/**
@@ -35,11 +41,10 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseBody
-	public ResponseEntity handle(RuntimeException e){
-		// TODO处理方法参数的异常类型
-		return null;
+	public CResult<RuntimeException> handle(RuntimeException e){
+		logger.error("运行代码异常{" + e.getMessage() + "}");
+		return new CResult<RuntimeException>(false, "504", Constant.RUNTIME_EXCEPTION);
 	}
-	
 	
 	/**
 	 * <p>数据库异常</p>
@@ -48,9 +53,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(SQLException.class)
 	@ResponseBody
-	public ResponseEntity handle(SQLException e){
-		// TODO处理方法参数的异常类型
-		return null; 
+	public CResult<SQLException> handle(SQLException e){
+		logger.error("数据库异常{" + e.getMessage() + "}");
+		return new CResult<SQLException>(false, "504", Constant.RUNTIME_EXCEPTION);
 	}
 	
 	/**
@@ -60,9 +65,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(BindException.class)
 	@ResponseBody
-	public ResponseEntity handle(BindException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<BindException> handle(BindException e){
+		logger.error("数据库异常{" + e.getMessage() + "}");
+		return new CResult<BindException>(false, "504", Constant.RUNTIME_EXCEPTION);
 	}
 	
 	/**
@@ -72,9 +77,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(NullPointerException .class)
 	@ResponseBody
-	public ResponseEntity handle(NullPointerException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<NullPointerException> handle(NullPointerException e){
+		logger.error("数据库异常{" + e.getMessage() + "}");
+		return new CResult<NullPointerException>(false, "504", Constant.RUNTIME_EXCEPTION);
 	}
 	
 	/**
@@ -84,9 +89,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(ArithmeticException .class)
 	@ResponseBody
-	public ResponseEntity handle(ArithmeticException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<ArithmeticException> handle(ArithmeticException e){
+		logger.error("算数异常{" + e.getMessage() + "}");
+		return new CResult<ArithmeticException>(false, "504", Constant.RUNTIME_EXCEPTION);
 	}
 	
 	/**
@@ -96,9 +101,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(ClassCastException.class)
 	@ResponseBody
-	public ResponseEntity handle(ClassCastException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<ClassCastException> handle(ClassCastException e){
+		logger.error("对象转换异常{" + e.getMessage() + "}");
+		return new CResult<ClassCastException>(false, "504", Constant.RUNTIME_EXCEPTION);
 	}
 	
 	/**
@@ -108,21 +113,21 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(FileNotFoundException.class)
 	@ResponseBody
-	public ResponseEntity handle(FileNotFoundException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<FileNotFoundException> handle(FileNotFoundException e){
+		logger.error("文件找不到异常{" + e.getMessage() + "}");
+		return new CResult<FileNotFoundException>(false, "504", Constant.RUNTIME_EXCEPTION); 
 	}
 	
 	/**
-	 * <p>字符串转换为数字异常</p>
+	 * <p>数字转换异常</p>
 	 * @param e
 	 * @return
 	 */
 	@ExceptionHandler(NumberFormatException.class)
 	@ResponseBody
-	public ResponseEntity handle(NumberFormatException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<NumberFormatException> handle(NumberFormatException e){
+		logger.error("数字转换异常{" + e.getMessage() + "}");
+		return new CResult<NumberFormatException>(false, "504", Constant.RUNTIME_EXCEPTION); 
 	}
 	
 	/**
@@ -132,9 +137,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(ArrayIndexOutOfBoundsException.class)
 	@ResponseBody
-	public ResponseEntity handle(ArrayIndexOutOfBoundsException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<ArrayIndexOutOfBoundsException> handle(ArrayIndexOutOfBoundsException e){
+		logger.error("数组下标越界{" + e.getMessage() + "}");
+		return new CResult<ArrayIndexOutOfBoundsException>(false, "504", Constant.RUNTIME_EXCEPTION); 
 	}
 	
 	/**
@@ -144,9 +149,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(IllegalAccessException.class)
 	@ResponseBody
-	public ResponseEntity handle(IllegalAccessException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<IllegalAccessException> handle(IllegalAccessException e){
+		logger.error("方法的参数错误{" + e.getMessage() + "}");
+		return new CResult<IllegalAccessException>(false, "504", Constant.RUNTIME_EXCEPTION); 
 	}
 	
 	/**
@@ -156,9 +161,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseBody
-	public ResponseEntity handle(IllegalArgumentException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<IllegalArgumentException> handle(IllegalArgumentException e){
+		logger.error("访问权限异常{" + e.getMessage() + "}");
+		return new CResult<IllegalArgumentException>(false, "504", Constant.RUNTIME_EXCEPTION); 
 	}
 	
 	/**
@@ -168,9 +173,9 @@ public class GlobalExceptionHandler  {
 	 */
 	@ExceptionHandler(IOException.class)
 	@ResponseBody
-	public ResponseEntity handle(IOException e){
-		// TODO处理方法参数的异常类型 
-		return null; 
+	public CResult<IOException> handle(IOException e){
+		logger.error("输入输出异常{" + e.getMessage() + "}");
+		return new CResult<IOException>(false, "504", Constant.RUNTIME_EXCEPTION); 
 	}
 	
 }
