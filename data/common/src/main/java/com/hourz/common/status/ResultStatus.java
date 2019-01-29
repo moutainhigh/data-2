@@ -57,7 +57,7 @@ public class ResultStatus {
     public static final String UNSUPPORTED_MEDIA_TYPE = "415";			// 不支持媒体类型
     public static final String REQUESTED_RANGE_NOT_SATISFIABLE = "416";	// 请求范围不符合越界
     public static final String EXPECTATION_FAILED = "417";				// 预期结果错误
-    public static final String I_AM_A_TEAPOT = "418";					// 协议错误
+    public static final String I_AM_A_TEAPOT = "418";					// 协议错误,兼容性
     public static final String INSUFFICIENT_SPACE_ON_RESOURCE = "419";	// 资源空间不足(已过期)
     public static final String METHOD_FAILURE = "420";					// 方法错误(已过期)
     public static final String DESTINATION_LOCKED = "421";				// 目标锁定

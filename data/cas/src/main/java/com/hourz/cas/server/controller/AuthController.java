@@ -20,6 +20,7 @@ import com.hourz.cas.server.service.AuthService;
 import com.hourz.common.config.Config;
 import com.hourz.common.constant.Constant;
 import com.hourz.common.json.CResult;
+import com.hourz.common.status.ResultStatus;
 import com.hourz.pojo.Auth;
 import com.hourz.pojo.LoginInfo;
 import com.hourz.pojo.User;
@@ -57,6 +58,7 @@ public class AuthController {
 		boolean success = false;
 		// 判断登录信息
 		String message = null;
+		String code = null;
 		// 判断验证码是否正确
 		if (!CaptchaUtils.getInstance().checkVerifyCaptcha(request, auth.getCaptcha())) {
 			logger.debug("验证码错误，用户验证码为："+auth.getCaptcha());
@@ -71,15 +73,17 @@ public class AuthController {
 				success = true;
 				int validDays = Integer.parseInt(Config.getInstance().getProperty(Constant.Config_Remember_Me_Valid_Days));
 				//HttpUtils.openRememberMe(response, auth.getLoginName(), auth.getPassword(), validDays);
-				message=Config.getInstance().getProperty(Constant.Res_Code_Login_Success);
+				message = Config.getInstance().getProperty(Constant.Res_Code_Login_Success);
 				logger.debug("用户 '" + auth.getLoginName() + "' 登录成功！");
+				code = ResultStatus.OK;
 			} else {
 				//HttpUtils.closeRememberMe(response);
-				message=Config.getInstance().getProperty(Constant.Res_Code_Password_Error);
+				message = Config.getInstance().getProperty(Constant.Res_Code_Password_Error);
 				logger.debug("密码错误，错误登录密码为：" + user.getPassword());
+				code = ResultStatus.NOT_ACCEPTABLE;
 			}
 		}
-		return new CResult<User>(success, null, user, null, null, message);
+		return new CResult<User>(success, code, user, null, null, message);
 	}
 	
 	/**

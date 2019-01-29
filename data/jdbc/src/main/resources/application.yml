@@ -1,0 +1,174 @@
+#  服务配置
+server:
+  # 端口号
+  port: 8083
+  # 服务环境
+  servlet:
+    context-path: /v0.1
+
+# spring配置
+spring:
+  # 服务名
+  application:
+    name: jdbc
+  # HTTP请求编码
+  http: 
+    encoding:
+      charset: UTF-8 
+      force: true
+      enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  # 数据源配置（主数据源）
+  datasource: 
+    #配置这个属性的意义在于，如果存在多个数据源，监控的时候可以通过名字来区分开来。
+    name: MAIN_DB
+    driverClassName: ${jdbc.driverClassName}
+    url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
+     # 数据源类型 使用druid数据源
+    type: ${datasource.type}
+    # 属性类型是字符串，通过别名的方式配置扩展插件，
+    #常用的插件有：  监控统计用的filter:stat;日志用的filter:log4j;防御sql注入的filter:wall(不支持金仓)
+    filters: ${jdbc.druid.filters}
+    #连接池最大数量 最大活动连接:连接池在同一时间能够分配的最大活动连接的数量, 如果设置为非正数则表示不限制
+    maxActive: 20
+    # 初始化连接大小
+    initialSize: 2
+    # 最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间(以毫秒计数),超过时间则抛出异常,如果设置为-1表示无限等待 60000毫秒
+    maxWait: 60000
+    # (Druid已不再使用该属性)最大空闲连接:连接池中容许保持空闲状态的最大连接数量,超过的空闲连接将被释放,如果设置为负数表示不限制
+    maxIdle: 10
+    # 最小空闲连接:连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接,如果设置为0则不创建
+    minIdle: 2
+    # 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. 如果设置为非正数,则不运行空闲连接回收器线程
+    #有两个含义：1) Destroy线程会检测连接的间隔时间2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
+    timeBetweenEvictionRunsMillis: 60000
+    #连接在池中保持空闲而不被空闲连接回收器线程(如果有)回收的最小时间值，单位毫秒 10分钟
+    minEvictableIdleTimeMillis: 600000
+    # SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前.如果指定,则查询必须是一个SQL SELECT并且必须返回至少一行记录
+    #用来检测连接是否有效的sql，
+    # 要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
+    validationQuery: select 1 from dual
+    # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除.
+    testWhileIdle: true
+    # 指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个.
+    testOnBorrow: false
+    # 指明是否在归还到池中前进行检验  注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+    testOnReturn: false
+    # 开启池的prepared statement 池功能
+    # 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。
+    poolPreparedStatements: false
+    # statement池能够同时分配的打开的statements的最大数量, 如果设置为0表示不限制
+    # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
+    # 在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+    maxOpenPreparedStatements: 20
+    #标记是否删除泄露的连接,如果他们超过了removeAbandonedTimout的限制.
+    #如果设置为true, 连接被认为是被泄露并且可以被删除,如果空闲时间超过removeAbandonedTimeout.
+    #设置为true可以为写法糟糕的没有关闭连接的程序修复数据库连接.
+    removeAbandoned: true
+    # 泄露的连接可以被删除的超时值, 单位秒
+    removeAbandonedTimeout: 300
+
+# 定制的数据源
+# custom:
+#  datasource:
+#    # 用于指定数据源类型,系统根据设定的names加载数据源多个以逗号分隔
+#    names : targetDB
+#    targetDB: 
+#      type: ${targetDB.datasource.type}
+#      driverClassName: ${TARGET_DB.jdbc.driverClassName}
+#      url: ${TARGET_DB.jdbc.url}
+#      username: ${TARGET_DB.jdbc.username}
+#      password: ${TARGET_DB.jdbc.password}
+#      filters: ${TARGET_DB.jdbc.druid.filters}
+
+#  redis:
+#    #数据库索引
+#    database: 0
+#    host:  ${redis.server.url}
+#    port: ${redis.server.port}
+#    pool:
+#      #连接池最大连接池（使用负值代表没有限制）
+#      max-active: 8
+#      #连接池最大阻塞等待时间
+#      max-wait: -1
+#      #连接池中的最大空闲连接
+#      max-idle: 8
+#      #连接池中的最小空闲连接
+#      min-idle: 0
+#      # 连接超时时间（毫秒）
+#      timeout: 0
+
+# mybatis配置
+mybatis:
+  # 基础配置
+  configuration:
+    # 下划线转化驼峰
+    map-underscore-to-camel-case: true
+
+# 分页插件
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  page-size-zero: true
+  params: count=countSql
+  
+#服务注册中心配置项 
+eureka:
+  instance:
+  #默认取值spring.application.name,如无特殊嗜好请设置spring.application.name无需设置eureka.instance.name
+#     appname: sjcb
+     prefer-ip-address: true
+     # 服务续约任务（心跳）的调用间隔默认30秒，单位：秒
+     lease-renewal-interval-in-seconds: 30
+     # 定义服务失效的时间，单位：秒 间隔默认90秒
+     lease-expiration-duration-in-seconds: 90
+     #健康检查页面的URL，相对路径，如果需要使用 HTTPS则需要使用绝对路径配置
+     health-check-url-path: ${server.context-path}${management.contextPath}/health
+     #状态页面的URL，相对路径，默认使用 HTTP 访问，如果需要使用 HTTPS则需要使用绝对路径配置
+     status-page-url-path: ${server.context-path}${management.contextPath}/info
+     
+  client:
+    service-url:
+      defaultZone: ${eureka.zone.url}
+    healthcheck: 
+      enabled: true #使用health端点来代替心跳表明服务是否可用，反应到eureka server ui上服务的UP还是DOWN
+  # instance:
+  #   # prefer-ip-address: true 
+  #   # 以IP地址注册到服务中心
+  #   hostname: 192.168.1.66
+  #   instance-id: 192.168.1.66:${server.port}
+
+
+#系统健康状态监控端口配置项
+endpoints:
+#   #false禁用所有监控端点
+   enabled: true   
+management:
+  # 管理端口设置为-1 关闭springboot endpoint的HTTP访问接口
+#  port: -1
+#  address: 127.0.0.1
+  security:
+      enabled: false
+  health:
+      mail: 
+        enabled: false
+  # 管理端接口contextPath
+  contextPath: /manage
+logging:
+  level:
+   com.casic27.sjrh: DEBUG
+swagger:
+  # 是否开启swagger api文档输出
+  enable: ${swagger.enable}
+  # swagger ui 扫描的包根路径
+  basepackage: com.casic27.sjrh
+  service:
+    name: 自定义查询服务
+    developer: zhang zi xiao
+    email: zhangzixiao@casic27.com
+    description: 提供自定义查询视图模板相关接口
+    version: v1.0

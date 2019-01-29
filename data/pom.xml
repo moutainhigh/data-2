@@ -23,5 +23,7 @@
 		<module>zuul</module>
 		<module>eureka</module>
 		<module>datamap</module>
+		<module>jdbc</module>
+		<module>netty</module>
 	</modules>
 </project>
